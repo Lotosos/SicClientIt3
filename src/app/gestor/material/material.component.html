@@ -2,5 +2,16 @@
   <nav>
     <a>Criar Material</a>
     <a>Editar Material</a>
+    <a>Listar Materiais</a>
   </nav>
+
+  <p>
+    <mat-form-field>
+      <mat-select placeholder="Lista de Materais">
+        <mat-option *ngFor="let mat of allMateriais" id="{{mat.id}}">
+          {{mat.tipo}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
 </div>

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {customModel} from './custom.material.module';
@@ -33,6 +34,7 @@ import { ItemComponent } from './cliente/item/item.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     customModel,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
