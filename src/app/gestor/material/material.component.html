@@ -1,17 +1,49 @@
 <div style="text-align:left">
+  <h1>Gestão de Materiais</h1>
   <nav>
-    <a>Criar Material</a>
-    <a>Editar Material</a>
-    <a>Listar Materiais</a>
+    <a (click)="criarMaterialHTML()">Criar Material</a>
+    <a (click)="editarMaterialHTML()">Editar Material</a>
+    <a (click)="listarMateriaisHTML()">Listar Materiais</a>
   </nav>
 
-  <p>
-    <mat-form-field>
-      <mat-select placeholder="Lista de Materais">
-        <mat-option *ngFor="let mat of allMateriais" id="{{mat.id}}">
-          {{mat.tipo}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </p>
+  <div *ngIf="statusMessage; else noError">
+    <div class="errorMsg">{{statusMessage}}</div>
+  </div>
+
+  <ng-template #noError>
+    <div *ngIf="criarMaterial" style="text-align: left">
+      <h2>Criar Material</h2>
+      <mat-form-field>
+        <input matInput placeholder="Nome do Material">
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="editarMaterial" style="text-align: left">
+      <h2>Editar Material</h2>
+      <mat-form-field>
+        <mat-select placeholder="Lista de Materiais">
+          <mat-option *ngFor="let mat of allMateriais" id="{{mat.id}}">
+            ID: {{mat.id}} - {{mat.tipo}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>
+        <mat-form-field>
+          <input matInput placeholder="Novo Nome do Material">
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="listarMateriais" style="text-align: left">
+      <h2>Listar Materiais</h2>
+      <p>
+        <mat-form-field>
+          <mat-select placeholder="Lista de Materiais">
+            <mat-option *ngFor="let mat of allMateriais" id="{{mat.id}}">
+              ID: {{mat.id}} - {{mat.tipo}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </p>
+    </div>
+  </ng-template>
 </div>

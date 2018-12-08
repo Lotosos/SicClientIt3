@@ -1,7 +1,59 @@
 <div style="text-align:left">
+  <h1>Gestão de Categorias</h1>
   <nav>
-    <a>Criar Categoria</a>
-    <a>Editar Categoria</a>
-    <a>Listar Categorias</a>
+    <a (click)="criarCategoriaHTML()">Criar Categoria</a>
+    <a (click)="editarCategoriaHTML()">Editar Categoria</a>
+    <a (click)="listarCategoriasHTML()">Listar Categorias</a>
   </nav>
+
+  <div *ngIf="statusMessage; else noError">
+    <div class="errorMsg">{{statusMessage}}</div>
+  </div>
+
+  <ng-template #noError>
+    <div *ngIf="criarCategoria" style="text-align: left">
+      <h2>Criar Categoria</h2>
+      <mat-form-field>
+        <input matInput placeholder="Descrição Categoria">
+      </mat-form-field>
+      <p></p>
+      <div style="text-align:left">
+        <nav>
+          <a>Criar Categoria</a>
+        </nav>
+      </div>
+    </div>
+
+    <div *ngIf="listarCategorias" style="text-align: left">
+      <h2>Listar Categorias</h2>
+      <mat-form-field>
+        <mat-select placeholder="Lista de Categorias">
+          <mat-option *ngFor="let mat of allCategorias" id="{{mat.id}}">
+            ID: {{mat.id}} - {{mat.descricao}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="editarCategoria" style="text-align: left">
+      <h2>Editar Categoria</h2>
+      <mat-form-field>
+        <mat-select placeholder="Categoria a Alterar">
+          <mat-option *ngFor="let mat of allCategorias" id="{{mat.id}}">
+            ID: {{mat.id}} - {{mat.descricao}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <input matInput placeholder="Nova Descrição">
+      </mat-form-field>
+      <p></p>
+      <div style="text-align:left">
+        <nav>
+          <a>Editar Categoria</a>
+        </nav>
+      </div>
+    </div>
+  </ng-template>
 </div>

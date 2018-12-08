@@ -8,12 +8,12 @@ import {HttpErrorResponse} from '@angular/common/http'
 @Injectable({
   providedIn: 'root'
 })
-export class MaterialService {
+export class CategoriaService {
 
   private WebApiIt1url = 'https://sic20181106055047.azurewebsites.net/api/';
   constructor(private httpClient: HttpClient) { }
-  getMateriais(): Observable<any> {
-    return this.httpClient.get(this.WebApiIt1url + 'material').pipe(
+  getCategorias(): Observable<any> {
+    return this.httpClient.get(this.WebApiIt1url + 'categoria').pipe(
       map(this.extractData));
   }
   private extractData(res: Response) {
