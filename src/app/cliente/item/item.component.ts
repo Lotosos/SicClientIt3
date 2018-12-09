@@ -9,6 +9,7 @@ import { ProdutoService } from '../../gestor/produto/produto.service';
 import { ItemService } from '../item/item.service';
 
 
+
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -21,14 +22,14 @@ export class ItemComponent implements OnInit {
   allAcabamentos: Acabamento[];
   allProdutos: Produto[];
   allMateriais: Material[];
-  allProdutoFilhos: Produto[];
+  allProdutoFilhos: ProdutoItem[];
   altura: number;
   largura: number;
   profundidade: number;
   selectedProduto: Produto = null;
   selectedMaterial: Material = null;
   selectedAcabamento: Acabamento = null;
-  selectedProdutoFilhos: Produto[] = null;
+  selectedProdutoFilhos: ProdutoItem[] = null;
   criarItem: boolean = false;
   editarItem: boolean = false;
   listarItems: boolean = false;
@@ -65,16 +66,8 @@ export class ItemComponent implements OnInit {
     },
       error => { this.statusMessage = "Error: Service Unavailable"; });
   }
-  getProdutoFilhos(idProduto: number): void {
-    this.itemSrv.getProdutoFilhos(idProduto).subscribe(data => {
-      console.log(data);
-      this.allProdutoFilhos = data;
-    },
-      error => { this.statusMessage = "Error: Service Unavailable"; });
-  }
   selecionarProduto(produto: Produto) {
     this.getMateriais(produto.id);
-    this.getProdutoFilhos(produto.id);
   }
   selecionarMaterial(material: Material) {
     this.getAcabamentos(material.id);
@@ -102,6 +95,13 @@ export class ItemComponent implements OnInit {
   }
 
   addItemHTML() {
+  /*  console.log(this.altura);
+    console.log(this.largura);
+    console.log(this.profundidade);
+    console.log(this.selectedMaterial);
+    console.log(this.selectedAcabamento);
+    console.log(this.selectedProduto);
+    console.log(this.selectedProdutoFilhos);*/
     let altura = this.altura;
     let largura = this.largura;
     let profundidade = this.profundidade;
@@ -128,10 +128,11 @@ export class ItemComponent implements OnInit {
     let idProduto = ""+this.selectedProduto.id;
     let idMaterial = ""+this.selectedMaterial.id;
     let idAcabamento = ""+this.selectedAcabamento.id;
-    let filhos: string[];
-    for (let i in this.selectedProdutoFilhos){
-      filhos[i] = ""+this.selectedProdutoFilhos[i];
+    let filhos: string[] = new Array(); 
+    for(let i = 0; i < this.selectedProdutoFilhos.length; i++){
+      filhos[i] = this.selectedProdutoFilhos[i]._id;
     }
+
     this.itemSrv.addItem({ idProduto, altura, largura, profundidade, idMaterial,  idAcabamento, filhos } as ProdutoItem)
       .subscribe(item => {
         this.allItems.push(item);

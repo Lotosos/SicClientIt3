@@ -50,9 +50,9 @@
       </mat-form-field>
       <p></p>
       <mat-form-field>
-        <mat-select placeholder="Lista de ProdutoFilhos" [(ngModel)]="selectedProdutoFilhos">
-          <mat-option *ngFor="let prf of allProdutoFilhos" id="{{prf.id}}" [value]="prf">
-            ID: {{prf.id}} - {{prf.nome}}
+        <mat-select placeholder="Lista de ProdutoFilhos" [(ngModel)]="selectedProdutoFilhos" multiple>
+          <mat-option *ngFor="let prf of allItems" id="{{prf.id}}" [value]="prf">
+            Produto {{prf.idProduto}} Material {{prf.idMaterial}} Acabamento {{prf.idAcabamento}}
           </mat-option>
         </mat-select>
       </mat-form-field>
