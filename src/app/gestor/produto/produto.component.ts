@@ -6,7 +6,7 @@ import { ProdutoService } from './produto.service';
 import { CategoriaService } from '../categoria/categoria.service';
 import { MaterialService } from '../material/material.service';
 import { ProdutoMaterialService } from './produto-material.service';
-import { ProdutoMaterial } from './Produto-Material';
+import { ProdutoMaterial } from './produto-material';
 
 @Component({
   selector: 'app-produto',

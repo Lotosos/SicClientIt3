@@ -3,8 +3,8 @@ import { Produto } from '../produto/produto';
 import { ProdutoService } from '../produto/produto.service';
 import { AgregacaoService } from './agregacao.service';
 import { Agregacao } from './agregacao';
-import { RestricaoService } from './Restricao.service';
-import { Restricao } from './Restricao';
+import { RestricaoService } from './restricao.service';
+import { Restricao } from './restricao';
 
 @Component({
   selector: 'app-agregacao',

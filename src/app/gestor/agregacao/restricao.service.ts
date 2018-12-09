@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
-import { Restricao } from './Restricao';
+import { Restricao } from './restricao';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
