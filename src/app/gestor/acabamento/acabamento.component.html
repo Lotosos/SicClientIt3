@@ -14,12 +14,12 @@
     <div *ngIf="criarAcabamento" style="text-align: left">
       <h2>Criar Acabamento</h2>
       <mat-form-field>
-        <input matInput placeholder="Tipo Acabamento">
+        <input matInput placeholder="Tipo Acabamento" #acabamentoTipoUpdate>
       </mat-form-field>
       <p></p>
       <div style="text-align:left">
         <nav>
-          <a>Criar Acabamento</a>
+          <a (click)="addAcabamentoHTML(acabamentoTipoUpdate.value); acabamentoTipoUpdate.value=''">Criar Acabamento</a>
         </nav>
       </div>
     </div>
@@ -28,30 +28,31 @@
       <h2>Listar Acabamentos</h2>
       <mat-form-field>
         <mat-select placeholder="Lista de Acabamentos">
-          <mat-option *ngFor="let mat of allAcabamentos" id="{{mat.id}}">
-            ID: {{mat.id}} - {{mat.tipo}}
+          <mat-option *ngFor="let acab of allAcabamentos" id="{{acab.id}}" value="">
+            ID: {{acab.id}} - {{acab.tipo}}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    
+
     <div *ngIf="editarAcabamento" style="text-align: left">
       <h2>Editar Acabamento</h2>
+      <p>
+        <mat-form-field>
+          <mat-select placeholder="Acabamento a Alterar" [(ngModel)]="selectedAcabamento">
+            <mat-option *ngFor="let acab of allAcabamentos" [value]="acab" (click)="selecionarAcabamento(acab)">
+              ID: {{acab.id}} - {{acab.tipo}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </p>
       <mat-form-field>
-        <mat-select placeholder="Acabamento a Alterar">
-          <mat-option *ngFor="let mat of allAcabamentos" id="{{mat.id}}">
-            ID: {{mat.id}} - {{mat.tipo}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <p></p>
-      <mat-form-field>
-        <input matInput placeholder="Novo Tipo">
+        <input matInput placeholder="Novo Tipo" [(ngModel)]="acabamentoTipoUpdate">
       </mat-form-field>
       <p></p>
       <div style="text-align:left">
         <nav>
-          <a>Editar Acabamento</a>
+          <a (click)="updateAcabamentoHTML()">Editar Acabamento</a>
         </nav>
       </div>
     </div>

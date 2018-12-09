@@ -14,12 +14,12 @@
     <div *ngIf="criarCategoria" style="text-align: left">
       <h2>Criar Categoria</h2>
       <mat-form-field>
-        <input matInput placeholder="Descrição Categoria">
+        <input matInput placeholder="Descrição Categoria" #categoriaDescricaoUpdate>
       </mat-form-field>
       <p></p>
       <div style="text-align:left">
         <nav>
-          <a>Criar Categoria</a>
+          <a (click)="addCategoriaHTML(categoriaDescricaoUpdate.value); categoriaDescricaoUpdate.value=''">Criar Categoria</a>
         </nav>
       </div>
     </div>
@@ -28,8 +28,8 @@
       <h2>Listar Categorias</h2>
       <mat-form-field>
         <mat-select placeholder="Lista de Categorias">
-          <mat-option *ngFor="let mat of allCategorias" id="{{mat.id}}">
-            ID: {{mat.id}} - {{mat.descricao}}
+          <mat-option *ngFor="let cat of allCategorias" id="{{cat.id}}" value="">
+            ID: {{cat.id}} - {{cat.descricao}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -38,20 +38,20 @@
     <div *ngIf="editarCategoria" style="text-align: left">
       <h2>Editar Categoria</h2>
       <mat-form-field>
-        <mat-select placeholder="Categoria a Alterar">
-          <mat-option *ngFor="let mat of allCategorias" id="{{mat.id}}">
-            ID: {{mat.id}} - {{mat.descricao}}
+        <mat-select placeholder="Categoria a Alterar" [(ngModel)]="selectedCategoria">
+          <mat-option *ngFor="let cat of allCategorias" [value]="cat" (click)="selecionarCategoria(cat)">
+            ID: {{cat.id}} - {{cat.descricao}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <p></p>
       <mat-form-field>
-        <input matInput placeholder="Nova Descrição">
+        <input matInput placeholder="Nova Descrição" [(ngModel)]="categoriaDescricaoUpdate">
       </mat-form-field>
       <p></p>
       <div style="text-align:left">
         <nav>
-          <a>Editar Categoria</a>
+          <a (click)="updateCategoriaHTML()">Editar Categoria</a>
         </nav>
       </div>
     </div>

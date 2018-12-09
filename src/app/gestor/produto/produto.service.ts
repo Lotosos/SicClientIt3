@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http'
+import {HttpErrorResponse} from '@angular/common/http';
 
-import { Acabamento } from './acabamento';
+import { Produto } from './produto';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,13 +14,12 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class AcabamentoService {
+export class ProdutoService {
 
   private WebApiIt1url = 'https://sic20181106055047.azurewebsites.net/api/';
-  constructor(
-    private httpClient: HttpClient) {}
-  getAcabamentos(): Observable<any> {
-    return this.httpClient.get(this.WebApiIt1url + 'acabamento').pipe(
+  constructor(private httpClient: HttpClient) { }
+  getProdutos(): Observable<any> {
+    return this.httpClient.get(this.WebApiIt1url + 'produto').pipe(
       map(this.extractData));
   }
   private extractData(res: Response) {
@@ -39,14 +38,12 @@ export class AcabamentoService {
     return Observable.throw(err);
   }
 
-  addAcabamento(acabamento: Acabamento): Observable<Acabamento> {
-    alert("Foi Criado um Acabamento");
-    return this.httpClient.post<Acabamento>(this.WebApiIt1url + 'acabamento', acabamento, httpOptions);
+  addProduto(produto: Produto): Observable<Produto> {
+    return this.httpClient.post<Produto>(this.WebApiIt1url + 'produto', produto, httpOptions);
   }
 
-  updateAcabamento(id: number, acabamento: Acabamento): Observable<any> {
-    alert("Foi editado um Acabamento");
-    return this.httpClient.put(this.WebApiIt1url + 'acabamento/' + id, acabamento, httpOptions);
-  }
+  deleteProduto (id :number): Observable<Produto> {
 
+    return this.httpClient.delete<Produto>(this.WebApiIt1url+'produto/' + id, httpOptions);
+  }
 }

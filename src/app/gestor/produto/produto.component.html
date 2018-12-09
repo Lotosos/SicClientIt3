@@ -1,46 +1,97 @@
-<div style="text-align:center">
-  <p></p>
+<div style="text-align:left">
+  <h1>Gestão de Produtos</h1>
   <nav>
-    <a>Criar Produto</a>
-    <a>Listar Produtos</a>
-    <a>Editar Produto</a>
-    <a>Apagar Produto</a>
+    <a (click)="criarProdutoHTML()">Criar Produto</a>
+    <a (click)="editarProdutoHTML()">Editar Produto</a>
+    <a (click)="listarProdutosHTML()">Listar Produtos</a>
   </nav>
-</div>
 
-<div style="text-align:center">
-  <p></p>
-  <mat-form-field>
-    <input matInput placeholder="Nome Produto">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Altura">
-    <mat-hint align="end">Inserir Numero (x) ou Intervalo (x-y)</mat-hint>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Largura">
-    <mat-hint align="end">Inserir Numero (x) ou Intervalo (x-y)</mat-hint>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Profundidade">
-    <mat-hint align="end">Inserir Numero (x) ou Intervalo (x-y)</mat-hint>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Categoria">
-      <mat-option value="option">Categorias</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Material">
-      <mat-option value="option">Material</mat-option>
-    </mat-select>
-    <mat-hint align="end">Escolher um ou mais materiais</mat-hint>
-  </mat-form-field>
-  <p></p>
-</div>
+  <div *ngIf="statusMessage; else noError">
+    <div class="errorMsg">{{statusMessage}}</div>
+  </div>
 
-<div style="text-align:center">
-  <nav>
-    <a>Criar Produto</a>
-  </nav>
+  <ng-template #noError>
+    <div *ngIf="criarProduto" style="text-align:left">
+      <p></p>
+      <mat-form-field>
+        <input matInput placeholder="Nome Produto" #nomeProdutoUpdate>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Altura" #alturaUpdate>
+        <mat-hint align="end">Inserir Numero (x) ou Intervalo (x-y)</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Largura" #larguraUpdate>
+        <mat-hint align="end">Inserir Numero (x) ou Intervalo (x-y)</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Profundidade" #profundidadeUpdate>
+        <mat-hint align="end">Inserir Numero (x) ou Intervalo (x-y)</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Categoria" [(ngModel)]="selectedCategoriaCreate">
+            <mat-option *ngFor="let cat of allCategorias" id="CategoriaCreateId" [value]="cat" >
+                ID: {{cat.id}} - {{cat.descricao}}
+            </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p></p>
+      <div style="text-align:center">
+        <nav>
+          <a (click)="addProdutoHTML(nomeProdutoUpdate.value, alturaUpdate.value, larguraUpdate.value, profundidadeUpdate.value)">Criar Produto</a>
+        </nav>
+      </div>
+    </div>
+
+    <div *ngIf="editarProduto" style="text-align:left">
+        <p>
+            <mat-form-field>
+              <mat-select placeholder="Lista de Produtos" [(ngModel)]="selectedProduto" >
+                <mat-option *ngFor="let prod of allProdutos" id="listaProdutosUpdate" [value]="prod" (click)="selecionarProduto(prod)">
+                  ID: {{prod.id}} - {{prod.nome}}  
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </p>
+        <mat-form-field>
+          <input matInput placeholder="Nome Produto" [(ngModel)]="nomeUpdate">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Altura" [(ngModel)]="alturaUpdate">
+          <mat-hint align="end">Inserir Numero (x) ou Intervalo (x-y)</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Largura" [(ngModel)]="larguraUpdate">
+          <mat-hint align="end">Inserir Numero (x) ou Intervalo (x-y)</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Profundidade" [(ngModel)]="profundidadeUpdate">
+          <mat-hint align="end">Inserir Numero (x) ou Intervalo (x-y)</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Categoria" [(ngModel)]="selectedCategoria">
+                <mat-option *ngFor="let cat of allCategorias" id="listaCategoriasUpdate" [value]="cat" (click)="selecionarCategoria(cat)">
+                    ID: {{cat.id}} - {{cat.descricao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p></p>
+        <div style="text-align:center">
+          <nav>
+            <a>Editar Produto</a>
+          </nav>
+        </div>
+    </div>
+
+    <div *ngIf="listarProdutos" style="text-align:left">
+      <h2>Listar Materiais</h2>
+      <ul class="produtos">
+        <li *ngFor="let prod of allProdutos">
+          <span class="badge">{{prod.id}}</span>
+          <span>{{prod.nome}}</span>
+          <button class="delete" title="delete produto" (click)="deleteProdutoHTML(prod.id)">x</button>
+        </li>
+      </ul>
+    </div>
+  </ng-template>
 </div>

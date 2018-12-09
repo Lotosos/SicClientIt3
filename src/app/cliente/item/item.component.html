@@ -1,8 +1,125 @@
 <div style="text-align:left">
+  <h1>Gestão de Items</h1>
   <nav>
-    <a>Criar Item</a>
-    <a>Listar Items</a>
-    <a>Editar Item</a>
-    <a>Apagar Item</a>
+    <a (click)="criarItemHTML()">Criar Item</a>
+    <a (click)="listarItemsHTML()">Listar Items</a>
+    <a (click)="editarItemHTML()">Editar Item</a>
   </nav>
+
+  <div *ngIf="statusMessage; else noError">
+    <div class="errorMsg">{{statusMessage}}</div>
+  </div>
+
+  <ng-template #noError>
+    <div *ngIf="criarItem" style="text-align: left">
+      <h2>Criar Item</h2>
+      <mat-form-field>
+        <input matInput placeholder="Altura" [(ngModel)]="altura">
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <input matInput placeholder="Largura" [(ngModel)]="largura">
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <input matInput placeholder="Profundidade" [(ngModel)]="profundidade">
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <mat-select placeholder="Lista de Produtos" [(ngModel)]="selectedProduto">
+          <mat-option *ngFor="let prt of allProdutos" id="{{prt.id}}" [value]="prt" (click)="selecionarProduto(prt)">
+            ID: {{prt.id}} - {{prt.nome}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <mat-select placeholder="Lista de Materiais" [(ngModel)]="selectedMaterial">
+          <mat-option *ngFor="let met of allMateriais" id="{{met.id}}" [value]="met" (click)="selecionarMaterial(met)">
+            ID: {{met.id}} - {{met.tipo}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <mat-select placeholder="Lista de Acabamentos" [(ngModel)]="selectedAcabamento">
+          <mat-option *ngFor="let act of allAcabamentos" id="{{act.id}}" [value]="act">
+            ID: {{act.id}} - {{act.tipo}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div style="text-align:left">
+        <nav>
+          <a (click)="addItemHTML()">Criar Item</a>
+        </nav>
+      </div>
+    </div>
+
+    <div *ngIf="editarItem" style="text-align: left">
+      <h2>Editar Item</h2>
+      <mat-form-field>
+        <mat-select placeholder="Lista de Items">
+          <mat-option *ngFor="let mat of allItems" id="{{mat.id}}" value="">
+            ID: {{mat._id}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <input matInput placeholder="Nome" #itemNome>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <input matInput placeholder="Altura" #itemAltura>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <input matInput placeholder="Largura" #itemLargura>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <input matInput placeholder="Profundidade" #itemProfundidade>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <mat-select placeholder="Lista de Produtos">
+          <mat-option *ngFor="let prt of allProdutos" id="{{prt.id}}" [value]="prt" (click)="selecionarProduto(prt)">
+            ID: {{prt.id}} - {{prt.nome}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <mat-select placeholder="Lista de Materiais">
+          <mat-option *ngFor="let met of allMateriais" id="{{met.id}}" [value]="met" (click)="selecionarMaterial(met)">
+            ID: {{met.id}} - {{met.tipo}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <mat-select placeholder="Lista de Acabamentos">
+          <mat-option *ngFor="let act of allAcabamentos" id="{{act.id}}" [value]="act">
+            ID: {{act.id}} - {{act.tipo}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div style="text-align:left">
+        <nav>
+          <a (click)="addItemHTML(acabamentoTipo.value); acabamentoTipo.value=''">Criar Acabamento</a>
+        </nav>
+      </div>
+    </div>
+
+    <div *ngIf="listarItems" style="text-align:left">
+      <h2>Listar Items</h2>
+      <ul class="items">
+        <li *ngFor="let prod of allItems">
+          <span class="badge">{{prod._id}}</span>
+          <button class="delete" title="delete item" (click)="deleteItemHTML(prod._id)">x</button>
+        </li>
+      </ul>
+    </div>
+
+  </ng-template>
 </div>

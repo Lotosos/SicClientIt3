@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http'
+
+import { Categoria } from './categoria';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +17,8 @@ import {HttpErrorResponse} from '@angular/common/http'
 export class CategoriaService {
 
   private WebApiIt1url = 'https://sic20181106055047.azurewebsites.net/api/';
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient) { }
   getCategorias(): Observable<any> {
     return this.httpClient.get(this.WebApiIt1url + 'categoria').pipe(
       map(this.extractData));
@@ -31,4 +38,14 @@ export class CategoriaService {
     }
     return Observable.throw(err);
   }
+
+  addCategoria(categoria: Categoria): Observable<Categoria> {
+    return this.httpClient.post<Categoria>(this.WebApiIt1url + 'categoria', categoria, httpOptions);
+  }
+
+  updateCategoria(id: number, categoria: Categoria): Observable<any> {
+    alert("Foi editada uma Categoria");
+    return this.httpClient.put(this.WebApiIt1url + 'categoria/' + id, categoria, httpOptions);
+  }
+
 }
