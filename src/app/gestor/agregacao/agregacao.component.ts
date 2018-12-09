@@ -37,10 +37,12 @@ export class AgregacaoComponent implements OnInit {
   selectedProdutoAgregado: Produto = null;
   currentAgregacao: Agregacao = null;
   selectedRestricao: Restricao = null;
+  volume: string = "";
+  selectedTipoRestricao: string = "";
 
-  constructor(private produtoSrv: ProdutoService, private agregacaoSrv: AgregacaoService) { }
+  constructor(private produtoSrv: ProdutoService, private agregacaoSrv: AgregacaoService, private restricaoSrv: RestricaoService) { }
 
-  ngOnInit() {this.getProdutos();}
+  ngOnInit() { this.getProdutos(); }
   private getProdutos(): void {
     this.produtoSrv.getProdutos().subscribe(data => {
       console.log(data);
@@ -75,13 +77,13 @@ export class AgregacaoComponent implements OnInit {
     }
   }
 
-  getProdutosFamilia(prod:Produto){
-    if(prod==null) return;
-    
-    if(this.paisfilhos) {
-      this.getProdutosPais(prod.id);
-    }else{
-      this.getProdutosFilhos(prod.id);
+  getProdutosFamilia() {
+    if (this.selectedProdutoAgregacao == null) return;
+
+    if (this.paisfilhos) {
+      this.getProdutosPais(this.selectedProdutoAgregacao.id);
+    } else {
+      this.getProdutosFilhos(this.selectedProdutoAgregacao.id);
     }
   }
 
@@ -99,15 +101,16 @@ export class AgregacaoComponent implements OnInit {
     });
   }
 
-  getAgregacaoBool(prod:Produto){
-    if(this.paisfilhos) {
+  getAgregacaoBool(prod: Produto) {
+    if (this.paisfilhos) {
       this.getAgregacao(prod.id, this.selectedProdutoAgregacao.id);
-    }else{
+    } else {
       this.getAgregacao(this.selectedProdutoAgregacao.id, prod.id);
     }
+    this.getRestricoesId();
   }
 
-  getAgregacao(idPai:number, idFilho:number) {
+  getAgregacao(idPai: number, idFilho: number) {
     this.agregacaoSrv.getAgregacaoId(idPai, idFilho).subscribe(data => {
       console.log(data);
       this.currentAgregacao = data;
@@ -115,27 +118,53 @@ export class AgregacaoComponent implements OnInit {
     });
   }
 
-  selecionarPaisFilhosToggle(bool: boolean){
+  selecionarPaisFilhosToggle(bool: boolean) {
     console.log("TRUE " + this.selectedProdutoAgregacao.id);
-    if(this.paisfilhos!=bool){
+    if (this.paisfilhos != bool) {
       this.paisfilhos = bool;
-      if(this.selectedProdutoAgregacao!=null) this.getProdutosFamilia(this.selectedProdutoAgregacao);
+      if (this.selectedProdutoAgregacao != null) this.getProdutosFamilia();
     }
   }
 
   eliminarAgregacao() {
-    if(this.currentAgregacao!=null){
-      console.log("pai: " +this.currentAgregacao.produtoIdPai+" filho: "+ this.currentAgregacao.produtoIdFilho);
+    if (this.currentAgregacao != null) {
+      console.log("pai: " + this.currentAgregacao.produtoIdPai + " filho: " + this.currentAgregacao.produtoIdFilho);
       this.agregacaoSrv.deleteAgregacao(this.currentAgregacao.produtoIdPai, this.currentAgregacao.produtoIdFilho)
-      .subscribe(data => {
-        console.log(data);
-        this.getProdutosFamilia(this.selectedProdutoAgregacao);
-        this.currentAgregacao=null;
-        alert("Agregacao eliminada");
-      },
-        error => { this.statusMessage = "Error: Service Unavailable"; });
+        .subscribe(data => {
+          console.log(data);
+          this.getProdutosFamilia();
+          this.currentAgregacao = null;
+          alert("Agregacao eliminada");
+        },
+          error => { this.statusMessage = "Error: Service Unavailable"; });
     }
   }
+  getRestricoesId() {
+    if (this.selectedProdutoAgregacao == null) {
+      alert("Selecione produto principal");
+      return;
+    }
+    if (this.selectedProdutoAgregado == null) {
+      alert("Selecione produto agregado");
+      return;
+    }
+    if (this.paisfilhos) {
+      console.log("Tru");
+      this.getRestricoes(this.selectedProdutoAgregado.id, this.selectedProdutoAgregacao.id);
+
+    } else {
+      console.log("Fake");
+      this.getRestricoes(this.selectedProdutoAgregacao.id, this.selectedProdutoAgregado.id);
+    }
+  }
+
+  getRestricoes(pai: number, filho: number) {
+    this.restricaoSrv.getRestricaoId(pai, filho).subscribe(data => {
+      console.log(data);
+      this.listaRestricoes = data;
+    });
+  }
+
   criarAgregacoesHTML() {
     this.criarAgregacoes = true;
     this.mostrarAgregacoes = false;
@@ -146,5 +175,53 @@ export class AgregacaoComponent implements OnInit {
     this.mostrarAgregacoes = true;
   }
 
+  eliminarRestricao() {
+    if (this.selectedRestricao == null) { alert("Escolha os produtos e a restricao a eliminar"); return; }
 
+    this.restricaoSrv.deleteRestricao(this.selectedRestricao.id).subscribe(data => {
+      console.log(data);
+      alert("Restricao Apagada");
+      this.selectedRestricao = null;
+      this.getRestricoesId();
+    });
+  }
+
+  criarRestricao() {
+    if (this.selectedProdutoAgregacao == null) {
+      alert("Selecione produto principal");
+      return;
+    }
+    if (this.selectedProdutoAgregado == null) {
+      alert("Selecione produto agregado");
+      return;
+    }
+    let tipoRes = this.selectedTipoRestricao.trim();
+    if (!tipoRes) {
+      alert("Selecione um tipo de restricao");
+      return;
+    }
+
+    let params = this.volume.trim();
+
+    if (!params) {
+      alert("Selecione um volume adequado");
+      return;
+    }
+    let produtoProdutoIdPai;
+    let produtoProdutoIdFilho;
+    if (this.paisfilhos) {
+      produtoProdutoIdPai = this.selectedProdutoAgregado.id;
+      produtoProdutoIdFilho = this.selectedProdutoAgregacao.id;
+    } else {
+      produtoProdutoIdPai = this.selectedProdutoAgregacao.id;
+      produtoProdutoIdFilho = this.selectedProdutoAgregado.id;
+    }
+
+    this.restricaoSrv.addRestricao({tipoRes, params, produtoProdutoIdPai, produtoProdutoIdFilho} as Restricao)
+    .subscribe(data => {
+      console.log(data);
+      alert("Restricao criada");
+      this.getRestricoesId();
+    });
+  }
 }

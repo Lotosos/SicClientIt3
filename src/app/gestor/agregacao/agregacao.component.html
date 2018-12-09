@@ -12,6 +12,8 @@
     <ng-template #noError>
         <div *ngIf="criarAgregacoes" style="text-align:left">
             <p></p>
+            <h1>Criar Agregaçao</h1>
+            <p></p>
             <mat-form-field>
                 <mat-select placeholder="Produto Pai" [(ngModel)]="selectedProdutoPai">
                     <mat-option *ngFor="let prod of allProdutos" id="listaProdutosUpdate" [value]="prod">
@@ -35,12 +37,14 @@
                 </nav>
             </div>
         </div>
-
+        
         <div *ngIf="mostrarAgregacoes" style="text-align:left">
-            <p></p>
+                <p></p>
+                <h1>Editar Agregaçoes</h1>
+                <p></p>
             <mat-form-field>
                 <mat-select placeholder="Lista de Produtos" [(ngModel)]="selectedProdutoAgregacao">
-                    <mat-option *ngFor="let prod of allProdutos" id="listaProdutosUpdate" [value]="prod" (click)="getProdutosFamilia(prod)">
+                    <mat-option *ngFor="let prod of allProdutos" id="listaProdutosUpdate" [value]="prod" (click)="getProdutosFamilia()">
                         ID: {{prod.id}} - {{prod.nome}}
                     </mat-option>
                 </mat-select>
@@ -71,11 +75,39 @@
             <p></p>
             <mat-form-field>
                 <mat-select placeholder="Lista de Restricoes" [(ngModel)]="selectedRestricao">
-                    <mat-option *ngFor="let rest of listaRestricoes" id="listaRestricoes" [value]="rest" (click)="selectRestricao()">
-                        ID: {{prod.id}} - {{prod.nome}}
+                    <mat-option *ngFor="let rest of listaRestricoes" id="listaRestricoes" [value]="rest">
+                        ID: {{rest.id}} - {{rest.tipoRes}} : {{rest.params}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+
+            <div style="text-align:left">
+                <nav>
+                    <button mat-raised-button (click)="eliminarRestricao()">Eliminar Restricao</button>
+                </nav>
+            </div>
+            <p></p>
+            <mat-form-field>
+                <mat-select placeholder="Lista de Tipos de Restricao" [(ngModel)]="selectedTipoRestricao">
+                    <mat-option value="VolMin">
+                        Volume Minimo
+                    </mat-option>
+                    <mat-option value="VolMax">
+                        Volume Maximo
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Volume" [(ngModel)]="volume">
+                <mat-hint align="end">Insera Percentagem de volume desejada</mat-hint>
+            </mat-form-field>
+
+            <div style="text-align:left">
+                <nav>
+                    <button mat-raised-button (click)="criarRestricao()">Criar Restricao</button>
+                </nav>
+            </div>
         </div>
     </ng-template>
 </div>
