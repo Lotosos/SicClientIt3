@@ -34,6 +34,10 @@ export class ItemService {
       return this.httpClient.get(this.WebApiIt1url2 + 'Material/' + idMaterial + '/Acabamentos').pipe(
       map(this.extractData));
   }
+  getProdutoFilhos(idProduto: number): Observable<any> {
+    return this.httpClient.get(this.WebApiIt1url2 + 'Produto/' + idProduto + '/Partes').pipe(
+    map(this.extractData));
+}
   private extractData(res: Response) {
     return res || {};
   }

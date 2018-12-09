@@ -8,6 +8,7 @@ import { MaterialComponent } from './gestor/material/material.component';
 import { AcabamentoComponent } from './gestor/acabamento/acabamento.component';
 import { CategoriaComponent } from './gestor/categoria/categoria.component';
 import { EncomendaComponent } from './cliente/encomenda/encomenda.component';
+import { AgregacaoComponent } from './gestor/agregacao/agregacao.component';
 import { ItemComponent } from './cliente/item/item.component';
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'material', component: MaterialComponent },
       { path: 'acabamento', component: AcabamentoComponent },
       { path: 'categoria', component: CategoriaComponent },
+      { path: 'agregacao', component: AgregacaoComponent },
     ] 
   },
   { path: 'cliente', component: ClienteComponent, children: 

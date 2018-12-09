@@ -48,6 +48,14 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <p></p>
+      <mat-form-field>
+        <mat-select placeholder="Lista de ProdutoFilhos" [(ngModel)]="selectedProdutoFilhos">
+          <mat-option *ngFor="let prf of allProdutoFilhos" id="{{prf.id}}" [value]="prf">
+            ID: {{prf.id}} - {{prf.nome}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div style="text-align:left">
         <nav>
           <a (click)="addItemHTML()">Criar Item</a>
@@ -58,7 +66,7 @@
     <div *ngIf="editarItem" style="text-align: left">
       <h2>Editar Item</h2>
       <mat-form-field>
-        <mat-select placeholder="Lista de Items">
+        <mat-select placeholder="Lista de Items" [(ngModel)]="selectedItem">
           <mat-option *ngFor="let mat of allItems" id="{{mat.id}}" value="">
             ID: {{mat._id}}
           </mat-option>
@@ -66,23 +74,19 @@
       </mat-form-field>
       <p></p>
       <mat-form-field>
-        <input matInput placeholder="Nome" #itemNome>
+        <input matInput placeholder="Altura" [(ngModel)]="altura">
       </mat-form-field>
       <p></p>
       <mat-form-field>
-        <input matInput placeholder="Altura" #itemAltura>
+        <input matInput placeholder="Largura" [(ngModel)]="largura">
       </mat-form-field>
       <p></p>
       <mat-form-field>
-        <input matInput placeholder="Largura" #itemLargura>
+        <input matInput placeholder="Profundidade" [(ngModel)]="profundidade">
       </mat-form-field>
       <p></p>
       <mat-form-field>
-        <input matInput placeholder="Profundidade" #itemProfundidade>
-      </mat-form-field>
-      <p></p>
-      <mat-form-field>
-        <mat-select placeholder="Lista de Produtos">
+        <mat-select placeholder="Lista de Produtos" [(ngModel)]="selectedProduto">
           <mat-option *ngFor="let prt of allProdutos" id="{{prt.id}}" [value]="prt" (click)="selecionarProduto(prt)">
             ID: {{prt.id}} - {{prt.nome}}
           </mat-option>
@@ -90,7 +94,7 @@
       </mat-form-field>
       <p></p>
       <mat-form-field>
-        <mat-select placeholder="Lista de Materiais">
+        <mat-select placeholder="Lista de Materiais" [(ngModel)]="selectedMaterial">
           <mat-option *ngFor="let met of allMateriais" id="{{met.id}}" [value]="met" (click)="selecionarMaterial(met)">
             ID: {{met.id}} - {{met.tipo}}
           </mat-option>
@@ -98,7 +102,7 @@
       </mat-form-field>
       <p></p>
       <mat-form-field>
-        <mat-select placeholder="Lista de Acabamentos">
+        <mat-select placeholder="Lista de Acabamentos" [(ngModel)]="selectedAcabamento">
           <mat-option *ngFor="let act of allAcabamentos" id="{{act.id}}" [value]="act">
             ID: {{act.id}} - {{act.tipo}}
           </mat-option>
@@ -106,7 +110,7 @@
       </mat-form-field>
       <div style="text-align:left">
         <nav>
-          <a (click)="addItemHTML(acabamentoTipo.value); acabamentoTipo.value=''">Criar Acabamento</a>
+          <a (click)="updateItemHTML()">Editar Item</a>
         </nav>
       </div>
     </div>
@@ -115,7 +119,7 @@
       <h2>Listar Items</h2>
       <ul class="items">
         <li *ngFor="let prod of allItems">
-          <span class="badge">{{prod._id}}</span>
+          <span class="badge">Produto: {{prod.idProduto}} Material: {{prod.idMaterial}} Acabamento: {{prod.idAcabamento}}</span>
           <button class="delete" title="delete item" (click)="deleteItemHTML(prod._id)">x</button>
         </li>
       </ul>

@@ -21,12 +21,14 @@ export class ItemComponent implements OnInit {
   allAcabamentos: Acabamento[];
   allProdutos: Produto[];
   allMateriais: Material[];
+  allProdutoFilhos: Produto[];
   altura: number;
   largura: number;
   profundidade: number;
   selectedProduto: Produto = null;
   selectedMaterial: Material = null;
   selectedAcabamento: Acabamento = null;
+  selectedProdutoFilhos: Produto[] = null;
   criarItem: boolean = false;
   editarItem: boolean = false;
   listarItems: boolean = false;
@@ -63,8 +65,16 @@ export class ItemComponent implements OnInit {
     },
       error => { this.statusMessage = "Error: Service Unavailable"; });
   }
+  getProdutoFilhos(idProduto: number): void {
+    this.itemSrv.getProdutoFilhos(idProduto).subscribe(data => {
+      console.log(data);
+      this.allProdutoFilhos = data;
+    },
+      error => { this.statusMessage = "Error: Service Unavailable"; });
+  }
   selecionarProduto(produto: Produto) {
     this.getMateriais(produto.id);
+    this.getProdutoFilhos(produto.id);
   }
   selecionarMaterial(material: Material) {
     this.getAcabamentos(material.id);
@@ -119,6 +129,9 @@ export class ItemComponent implements OnInit {
     let idMaterial = ""+this.selectedMaterial.id;
     let idAcabamento = ""+this.selectedAcabamento.id;
     let filhos: string[];
+    for (let i in this.selectedProdutoFilhos){
+      filhos[i] = ""+this.selectedProdutoFilhos[i];
+    }
     this.itemSrv.addItem({ idProduto, altura, largura, profundidade, idMaterial,  idAcabamento, filhos } as ProdutoItem)
       .subscribe(item => {
         this.allItems.push(item);

@@ -5,9 +5,11 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatSelectModule} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
-  imports: [FormsModule, MatListModule, MatButtonModule, MatCheckboxModule, MatRadioModule, MatFormFieldModule, MatInputModule, MatSelectModule ],
-  exports: [FormsModule, MatListModule, MatButtonModule, MatCheckboxModule, MatRadioModule, MatFormFieldModule, MatInputModule, MatSelectModule ],
+  imports: [MatDialogModule,MatSlideToggleModule, FormsModule, MatListModule, MatButtonModule, MatCheckboxModule, MatRadioModule, MatFormFieldModule, MatInputModule, MatSelectModule ],
+  exports: [MatDialogModule,MatSlideToggleModule, FormsModule, MatListModule, MatButtonModule, MatCheckboxModule, MatRadioModule, MatFormFieldModule, MatInputModule, MatSelectModule ],
 })
 export class customModel { }

@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CategoriaService } from './categoria.service';
+import { RestricaoService } from './restricao.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('CategoriaService', () => {
+describe('RestricaoService', () => {
   beforeEach(() => TestBed.configureTestingModule({imports: [HttpClientModule ],
     schemas: [NO_ERRORS_SCHEMA]}));
 
   it('should be created', () => {
-    const service: CategoriaService = TestBed.get(CategoriaService);
+    const service: RestricaoService = TestBed.get(RestricaoService);
     expect(service).toBeTruthy();
   });
 });

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClienteComponent } from './cliente.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ClienteComponent', () => {
   let component: ClienteComponent;
@@ -8,7 +10,9 @@ describe('ClienteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClienteComponent ]
+      declarations: [ ClienteComponent ],
+      imports: [HttpClientModule ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -21,5 +25,13 @@ describe('ClienteComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+
+  it('should render title in a h4 tag', () => {
+    const fixture = TestBed.createComponent(ClienteComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('h4').textContent).toContain('Opções de Utilização');
   });
 });

@@ -16,6 +16,7 @@ import { AcabamentoComponent } from './gestor/acabamento/acabamento.component';
 import { CategoriaComponent } from './gestor/categoria/categoria.component';
 import { EncomendaComponent } from './cliente/encomenda/encomenda.component';
 import { ItemComponent } from './cliente/item/item.component';
+import { AgregacaoComponent } from './gestor/agregacao/agregacao.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ItemComponent } from './cliente/item/item.component';
     CategoriaComponent,
     EncomendaComponent,
     ItemComponent,
+    AgregacaoComponent,
   ],
   imports: [
     BrowserModule,

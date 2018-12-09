@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MaterialComponent } from './material.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('MaterialComponent', () => {
   let component: MaterialComponent;
@@ -8,7 +10,9 @@ describe('MaterialComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MaterialComponent ]
+      declarations: [ MaterialComponent ],
+      imports: [HttpClientModule ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

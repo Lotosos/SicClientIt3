@@ -1,9 +1,10 @@
 <div style="text-align:left">
-  <h1>Gestão de Produtos</h1>
+    <h1>Gestão de Produtos</h1>
   <nav>
     <a (click)="criarProdutoHTML()">Criar Produto</a>
     <a (click)="editarProdutoHTML()">Editar Produto</a>
     <a (click)="listarProdutosHTML()">Listar Produtos</a>
+    <a (click)="adicionarMateriaisHTML()">Definir Materiais</a>
   </nav>
 
   <div *ngIf="statusMessage; else noError">
@@ -78,7 +79,7 @@
         <p></p>
         <div style="text-align:center">
           <nav>
-            <a>Editar Produto</a>
+            <a (click)="updateProdutoHTML(nomeUpdate.value, alturaUpdate.value, larguraUpdate.value, profundidadeUpdate.value)">Editar Produto</a>
           </nav>
         </div>
     </div>
@@ -93,5 +94,41 @@
         </li>
       </ul>
     </div>
+
+    <div *ngIf="adicionarMateriais" style="text-align:left">
+      <p></p>
+      <mat-form-field>
+        <mat-select placeholder="Produto" [(ngModel)]="selectedProdutoMaterial" >
+          <mat-option *ngFor="let prod of allProdutos" id="listaProdutosUpdate" [value]="prod" (click)="getMateriaisProduto()">
+            ID: {{prod.id}} - {{prod.nome}}  
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <p></p>
+      <mat-form-field>
+        <mat-select placeholder="Materiais de Produto" [(ngModel)]="selectedOwnedMaterial" >
+          <mat-option *ngFor="let mat of ownedMateriais" id="listaOwnedMateriais" [value]="mat">
+            ID: {{mat.id}} - {{mat.tipo}}  
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Materiais de Produto" [(ngModel)]="selectedNewMaterial" >
+           <mat-option *ngFor="let mat of allMateriais" id="listaAllMateriais" [value]="mat">
+            ID: {{mat.id}} - {{mat.tipo}}  
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p></p>
+      <div style="text-align:left">
+        <nav>
+            <button mat-raised-button (click)="eliminarMaterial()">Eliminar Material</button>
+            <button mat-raised-button (click)="adicionarmaterial()">Adicionar Material</button>
+        </nav>
+      </div>
+
+    </div>  
   </ng-template>
 </div>

@@ -18,10 +18,12 @@ export class ProdutoService {
 
   private WebApiIt1url = 'https://sic20181106055047.azurewebsites.net/api/';
   constructor(private httpClient: HttpClient) { }
+  
   getProdutos(): Observable<any> {
     return this.httpClient.get(this.WebApiIt1url + 'produto').pipe(
       map(this.extractData));
   }
+
   private extractData(res: Response) {
     return res || {};
   }
@@ -38,12 +40,31 @@ export class ProdutoService {
     return Observable.throw(err);
   }
 
+  getFilhos(id: number): Observable<any> {
+    return this.httpClient.get(this.WebApiIt1url + 'produto/'+ id +'/Partes').pipe(
+      map(this.extractData));
+  }
+
+  getPais(id: number): Observable<any> {
+    return this.httpClient.get(this.WebApiIt1url + 'produto/'+ id +'/PartesEm').pipe(
+      map(this.extractData));
+  }
+
   addProduto(produto: Produto): Observable<Produto> {
     return this.httpClient.post<Produto>(this.WebApiIt1url + 'produto', produto, httpOptions);
   }
 
-  deleteProduto (id :number): Observable<Produto> {
+  updateProduto(id: number, produto: Produto) {
+    alert("Foi editado um produto");
+    return this.httpClient.put(this.WebApiIt1url + 'produto/' + id, produto, httpOptions);
+  }
 
+  deleteProduto (id :number): Observable<Produto> {
     return this.httpClient.delete<Produto>(this.WebApiIt1url+'produto/' + id, httpOptions);
   }
+
+  getMateriais(idProduto: number): Observable<any> {
+    return this.httpClient.get(this.WebApiIt1url + 'Produto/'+ idProduto +'/Materiais').pipe(  
+    map(this.extractData));
+}
 }

@@ -1,0 +1,81 @@
+<div style="text-align:left">
+    <h1>Gestão de Agregações</h1>
+    <nav>
+        <a (click)="criarAgregacoesHTML()">Criar Agregacoes</a>
+        <a (click)="mostrarAgregacoesHTML()">Editar Agregacoes</a>
+    </nav>
+
+    <div *ngIf="statusMessage; else noError">
+        <div class="errorMsg">{{statusMessage}}</div>
+    </div>
+
+    <ng-template #noError>
+        <div *ngIf="criarAgregacoes" style="text-align:left">
+            <p></p>
+            <mat-form-field>
+                <mat-select placeholder="Produto Pai" [(ngModel)]="selectedProdutoPai">
+                    <mat-option *ngFor="let prod of allProdutos" id="listaProdutosUpdate" [value]="prod">
+                        ID: {{prod.id}} - {{prod.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="Produto Filho" [(ngModel)]="selectedProdutoFilho">
+                    <mat-option *ngFor="let prod of allProdutos" id="listaProdutosUpdate" [value]="prod">
+                        ID: {{prod.id}} - {{prod.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <p></p>
+            <div style="text-align:left">
+                <nav>
+                    <mat-slide-toggle mat-raised-button (click)="mudarAgregacao()" [checked]="obrigatorioToggleCreate"
+                        [(ngModel)]="obrigatorioToggleCreate">Obrigatorio</mat-slide-toggle>
+                    <button mat-raised-button (click)="criarAgregacao()">Criar Agregaçao</button>
+                </nav>
+            </div>
+        </div>
+
+        <div *ngIf="mostrarAgregacoes" style="text-align:left">
+            <p></p>
+            <mat-form-field>
+                <mat-select placeholder="Lista de Produtos" [(ngModel)]="selectedProdutoAgregacao">
+                    <mat-option *ngFor="let prod of allProdutos" id="listaProdutosUpdate" [value]="prod" (click)="getProdutosFamilia(prod)">
+                        ID: {{prod.id}} - {{prod.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <p>
+                <mat-form-field>
+                    <mat-select placeholder="ProdutosAgregados" [(ngModel)]="selectedProdutoAgregado">
+                        <mat-option *ngFor="let prod of produtosAgregados" id="listaProdutosUpdate" [value]="prod"
+                            (click)="getAgregacaoBool(prod)">
+                            ID: {{prod.id}} - {{prod.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-radio-group [(ngModel)]="paisfilhos">
+                    <mat-radio-button [value]=true (click)="selecionarPaisFilhosToggle(true)">Pais</mat-radio-button>
+                    <mat-radio-button [value]=false (click)="selecionarPaisFilhosToggle(false)">Filhos</mat-radio-button>
+                </mat-radio-group>
+            </p>
+            <p></p>
+
+            <div style="text-align:left">
+                <nav>
+                    <mat-slide-toggle mat-raised-button (click)="mudarAgregacao()" [checked]="obrigatorioToggle">Obrigatorio</mat-slide-toggle>
+                    <button mat-raised-button (click)="eliminarAgregacao()">Eliminar Agregaçao</button>
+                </nav>
+            </div>
+            <p></p>
+            <mat-form-field>
+                <mat-select placeholder="Lista de Restricoes" [(ngModel)]="selectedRestricao">
+                    <mat-option *ngFor="let rest of listaRestricoes" id="listaRestricoes" [value]="rest" (click)="selectRestricao()">
+                        ID: {{prod.id}} - {{prod.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </ng-template>
+</div>

@@ -5,6 +5,8 @@ const app = express();
 
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/SiCCliente'));
+var cors = require('cors');
+app.use(cors());
 
 app.get('/*', function(req,res) {
     
